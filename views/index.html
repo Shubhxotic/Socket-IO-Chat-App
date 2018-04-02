@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Socket.io App</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(function(){
+            // alert("Yolo");
+            var socket = io();
+            var name=prompt("Enter your Name:- ");
+            $('#message_form').submit(function(){
+            var msg=$("#m").val();
+            // alert(msg);
+            if(msg.trim().length>0){
+                // alert(msg);
+                console.log("msg.trim()= "+msg.trim());
+                socket.emit("chat message",name+":"+msg);
+                $("#m").val("");
+                $("#messages").append('<div class="col-12 row p-0"><p class="text-success text-right p-0" style="width: 80%;"><span class="float-left mr-5">Me:</span>'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
+                return false;
+            }
+            else{
+                console.log("Empty message");
+                return false;
+            }
+            });
+
+            socket.on('server message', function(msg){
+                var name=msg.split(':')[0];
+                var msg=msg.split(":")[1];
+                $("#messages").append('<div class="col-12 row p-0"><p class="text-primary text-left p-0" style="width: 80%;"><span class="float-left">'+name+':&nbsp;</span>'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
+                // $("#messages").append('<div class="col-12 row"><p class="text-primary text-left mr-5" style="width: 80%;">'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
+            });
+        });
+    </script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body class="text-center row" >
+    <div class="col-2"></div>
+    <div class="col-8 text-center">
+    <ul id="messages" class="row col-12" style=""></ul>
+    <form action="" id="message_form" method="" class="col-6 p-0 row m-0" style="position: fixed; bottom: 0;">
+        <input type="text" autocomplete="off" id="m" class="form-control col-8 m-0" placeholder="Type your Message Here.">
+        <input type="submit" name="" id="" value="Send" class="btn btn-primary m-0 col-4 ">   
+    </form>
+</div>
+</body>
+</html>

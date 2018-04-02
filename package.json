@@ -1,0 +1,20 @@
+{
+  "name": "sockettutorial",
+  "version": "1.0.0",
+  "description": "Implementation of Scoket.io Getting started guide",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "socket.io",
+    "node.js"
+  ],
+  "author": "shubham",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.0"
+  }
+}
