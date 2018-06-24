@@ -3,12 +3,14 @@ var app=express();
 var http=require('http').Server(app);
 var path=require('path');
 var io=require('socket.io')(http);
+var fs=require('fs');
 
 app.use(express.static(path.join(__dirname, 'public/')));
 console.log(path.join(__dirname, 'public/'));
 
 app.get('/',function(req,res){
-    res.sendFile('views/index.html', {root: __dirname});
+    // res.sendFile('views/index.html', {root: __dirname});
+    fs.createReadStream('views/index.html').pipe(res);
 });
 
 io.on('connection',function(socket){

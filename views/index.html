@@ -14,7 +14,8 @@
         $(function(){
             // alert("Yolo");
             var socket = io();
-            var name=prompt("Enter your Name:- ");
+            // var name=prompt("Enter your Name:- ");
+            var name="shubham";
             $('#message_form').submit(function(){
             var msg=$("#m").val();
             // alert(msg);
@@ -23,7 +24,12 @@
                 console.log("msg.trim()= "+msg.trim());
                 socket.emit("chat message",name+":"+msg);
                 $("#m").val("");
-                $("#messages").append('<div class="col-12 row p-0"><p class="text-success text-right p-0" style="width: 80%;"><span class="float-left mr-5">Me:</span>'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
+                if(new Date().getHours()>9){
+                    $("#messages").append('<div class="row float-right p-0 mr-0" style="width: 55%; float: right; background: Aquamarine "><p class="  col-2  text-left p-0 m-0">Me:</p><p class="   col-8 text-right p-0 m-0">'+msg+'</p><span class="  text-right mb-0  col-2  m-0 p-0">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div><br>');
+                }
+                else{
+                    $("#messages").append('<div class="row float-right  p-0 mr-0"  style=" width: 55%; float: right; background: Aquamarine"><p class="  col-2  text-left p-0 m-0">Me:</p><p class="   col-8 text-right p-0 m-0">'+msg+'</p><span class="  text-right mb-0  col-2 b0b m-0 p-0">0'+(new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div><br>');
+                }
                 return false;
             }
             else{
@@ -35,21 +41,43 @@
             socket.on('server message', function(msg){
                 var name=msg.split(':')[0];
                 var msg=msg.split(":")[1];
-                $("#messages").append('<div class="col-12 row p-0"><p class="text-primary text-left p-0" style="width: 80%;"><span class="float-left">'+name+':&nbsp;</span>'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
+                if(new Date().getHours()>9){
+                    $("#messages").append('<div class="row float-left p-0 mr-0 " style="width: 55%; float: left; background: Azure "><p class="  col-2 text-success text-left p-0 m-0">'+name+':</p><p class="  text-success col-8 text-right p-0 m-0">'+msg+'</p><span class="  text-right mb-0 text-success col-2  m-0 p-0">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div><br>');
+                }
+                else{
+                    $("#messages").append('<div class="row float-left  p-0 mr-0 "  style=" width: 55%; float: left; background: Azure"><p class="  col-2 text-success text-left p-0 m-0">'+name+':</p><p class="  text-success col-8 text-right p-0 m-0">'+msg+'</p><span class="  text-right mb-0 text-success col-2 b0b m-0 p-0">0'+(new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div><br>');
+                }
+                // $("#messages").append('<div class="b0b"><p class="b0b" style=""><span class="b0b">'+name+':&nbsp;</span>'+msg+'</p><span class="" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
                 // $("#messages").append('<div class="col-12 row"><p class="text-primary text-left mr-5" style="width: 80%;">'+msg+'</p><span class="text-right mb-0 text-success" style="width: 20%;">'+ (new Date()).getHours()+":"+(new Date()).getMinutes()+ '</span></div>');
             });
         });
     </script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css.css">
+
+
+    <style>
+    .b0{
+        border: 1px solid black;
+    }
+    </style>
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body class="text-center row" >
-    <div class="col-2"></div>
-    <div class="col-8 text-center">
-    <ul id="messages" class="row col-12" style=""></ul>
-    <form action="" id="message_form" method="" class="col-6 p-0 row m-0" style="position: fixed; bottom: 0;">
-        <input type="text" autocomplete="off" id="m" class="form-control col-8 m-0" placeholder="Type your Message Here.">
-        <input type="submit" name="" id="" value="Send" class="btn btn-primary m-0 col-4 ">   
+<body class="" >
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="col-4">
+            <h2 class="text-white" style="font-family: Georgia, 'Times New Roman', Times, serif;">SocketIoApp</h2>
+        </div>
+        <a class="float-right" href="https://github.com/Shubhxotic/Socket-IO-Chat-App"><i class="fab fa-github fa-2x"></i></a>
+    </nav>
+    <div class="col-8 my-5 text-center mx-auto" style="height: 50vh;background: #ddd; ">
+    <ul id="messages" class="w-100" style="width: 100%; height: 50px;" style="overflow: hidden;">
+    </ul>
+    <form action="" id="message_form" method="" class="" style="position: fixed; bottom: 0;">
+        <input type="text" autocomplete="off" id="m" class="" placeholder="Type your Message Here.">
+        <input type="submit" name="" id="" value="Send" class=" ">   
     </form>
-</div>
+    </div>
 </body>
 </html>
